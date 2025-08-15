@@ -1,38 +1,184 @@
+/* Global styles and main app container */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #050816;
+  color: #FFFFFF;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Container */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
-@keyframes App-logo-spin {
+/* Section Styles */
+section {
+  padding: 6rem 0;
+  position: relative;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ADB7BE;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 48px;
+  font-weight: 900;
+  color: #FFFFFF;
+  line-height: 1.2;
+  position: relative;
+}
+
+/* Scroll Animations */
+[data-aos] {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-aos].animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[data-aos="fade-right"] {
+  transform: translateX(-50px);
+}
+
+[data-aos="fade-left"] {
+  transform: translateX(50px);
+}
+
+[data-aos="fade-right"].animate,
+[data-aos="fade-left"].animate {
+  transform: translateX(0);
+}
+
+/* Loading state */
+body:not(.loaded) .hero-greeting,
+body:not(.loaded) .hero-name,
+body:not(.loaded) .hero-subtitle {
+  opacity: 0;
+  transform: translateY(50px);
+}
+
+body.loaded .hero-greeting {
+  animation: slideInUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.5s forwards;
+}
+
+body.loaded .hero-name {
+  animation: slideInUp 1s cubic-bezier(0.4, 0, 0.2, 1) 1s forwards;
+}
+
+body.loaded .hero-subtitle {
+  animation: slideInUp 1s cubic-bezier(0.4, 0, 0.2, 1) 1.5s forwards;
+}
+
+@keyframes slideInUp {
   from {
-    transform: rotate(0deg);
+    opacity: 0;
+    transform: translateY(50px);
   }
   to {
-    transform: rotate(360deg);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Performance optimizations */
+.floating-element,
+.rotating-cube,
+.icon-3d {
+  will-change: transform;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .floating-element,
+  .rotating-cube,
+  .icon-3d,
+  .gradient-text {
+    animation: none !important;
+  }
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #915EFF;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Keyboard navigation */
+.keyboard-navigation button:focus,
+.keyboard-navigation a:focus {
+  outline: 2px solid #915EFF;
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 42px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+  
+  section {
+    padding: 4rem 0;
+  }
+  
+  .section-title {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    font-size: 30px;
   }
 }
