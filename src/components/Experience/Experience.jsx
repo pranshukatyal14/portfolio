@@ -1,7 +1,13 @@
+
 import React from 'react';
 import { useCounterAnimation } from '../../hooks/useCounterAnimation';
 import { useIntersectionObserver } from '../../hooks/useIntersectionObserver';
 import './Experience.css';
+
+// Import company logos
+import chiLogo from '../../assets/images/companies/chi-logo.png';
+import noiseLogo from '../../assets/images/companies/noise-logo.webp';
+import bitcsLogo from '../../assets/images/companies/bitcs-logo.jpeg';
 
 const Experience = () => {
   const [ref] = useIntersectionObserver({
@@ -11,10 +17,10 @@ const Experience = () => {
 
   const experiences = [
     {
-      company: 'CHI',
+      company: 'Care Health Insurance',
       role: 'Senior Backend Engineer',
-      duration: '2022 - Present',
-      logo: 'CHI',
+      duration: '2025 - Present',
+      logo: chiLogo,
       logoClass: 'chi-logo',
       description: 'Leading backend development for enterprise applications, implementing microservices architecture and optimizing database performance.',
       achievements: [
@@ -25,9 +31,9 @@ const Experience = () => {
     },
     {
       company: 'Noise',
-      role: 'Backend Developer',
-      duration: '2021 - 2022',
-      logo: 'N',
+      role: 'Full Stack Developer',
+      duration: '2022-2025',
+      logo: noiseLogo,
       logoClass: 'noise-logo',
       description: 'Developed scalable backend solutions for IoT devices and mobile applications, working with real-time data processing.',
       achievements: [
@@ -37,10 +43,10 @@ const Experience = () => {
       ]
     },
     {
-      company: 'BitCS',
+      company: 'Bitcs',
       role: 'Junior Developer',
-      duration: '2020 - 2021',
-      logo: 'B',
+      duration: '2021-2022',
+      logo: bitcsLogo,
       logoClass: 'bitcs-logo',
       description: 'Started my journey in backend development, learning best practices and contributing to various client projects.',
       achievements: [
@@ -71,7 +77,11 @@ const Experience = () => {
               <div className="experience-content">
                 <div className="experience-header">
                   <div className={`company-logo ${exp.logoClass}`}>
-                    {exp.logo}
+                    <img
+                      src={exp.logo}
+                      alt={`${exp.company} Logo`}
+                      className="company-logo-img"
+                    />
                   </div>
                   <div className="experience-info">
                     <h4>{exp.role}</h4>
