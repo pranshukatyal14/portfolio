@@ -8,6 +8,8 @@ import Testimonials from './components/Testimonials/Testimonials';
 import Contact from './components/Contact/Contact';
 import Modal from './components/Modal/Modal';
 import { useScrollAnimation } from './hooks/useScrollAnimation';
+import About from "./components/About/About";
+
 
 function App() {
   const { handleScroll } = useScrollAnimation();
@@ -25,6 +27,8 @@ function App() {
     <div className="App">
       <Navbar />
       <Hero />
+      <About />
+
       <Introduction />
       <Experience />
       <Projects />

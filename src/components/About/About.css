@@ -1,0 +1,106 @@
+.about-section {
+  padding: 6rem 0;
+  background: #0d0b1a;
+  color: #fff;
+}
+
+.about-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+/* Animation side */
+.about-visual {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.about-lottie {
+  max-width: 350px;
+  width: 100%;
+}
+
+/* Content side */
+.about-content {
+  flex: 2;
+  max-width: 600px;
+}
+.section-title {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+}
+.about-intro {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+.about-details {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  color: #adb7be;
+}
+.highlight {
+  color: #915eff;
+  font-weight: 600;
+}
+
+/* Stats */
+.about-stats {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+.stat-card {
+  background: rgba(145, 94, 255, 0.15);
+  border: 1px solid rgba(145, 94, 255, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  min-width: 150px;
+  transition: transform 0.3s ease;
+}
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+.stat-card h3 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+.stat-card p {
+  font-size: 0.9rem;
+  color: #adb7be;
+}
+
+/* CV button */
+.about-actions .btn-primary {
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #915eff, #ac6aff);
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+.about-actions .btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(145, 94, 255, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .about-visual {
+    margin-bottom: 2rem;
+  }
+  .about-stats {
+    justify-content: center;
+  }
+}
