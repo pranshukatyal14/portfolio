@@ -1,6 +1,44 @@
 .projects-section {
   background: #100D25;
   padding: 6rem 0;
+  /* Aggressive performance containment */
+  contain: layout style paint;
+  /* Force GPU layer creation */
+  transform: translateZ(0);
+}
+
+.projects-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-subtitle {
+  color: #ADB7BE;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #00cea8 1.84%, #bf61ff 97.5%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.projects-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
 }
 
 .projects-description {
@@ -12,33 +50,44 @@
   line-height: 1.7;
 }
 
+/* FIXED: 3 projects per row with aggressive performance */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 3rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
   margin-top: 4rem;
+  /* Force GPU layer and contain reflows */
+  transform: translateZ(0);
+  contain: layout style;
 }
 
 .project-card {
-  background: linear-gradient(145deg, rgba(58, 50, 80, 0.5), rgba(22, 20, 40, 0.8));
-  backdrop-filter: blur(20px);
+  /* ULTRA PERFORMANCE: Simplified background - no complex gradients */
+  background: rgba(22, 20, 40, 0.95);
+  /* REMOVED: Heavy backdrop-filter completely */
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 30px;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* ULTRA PERFORMANCE: Single optimized transition */
+  transition: transform 0.3s ease-out;
   opacity: 0;
-  transform: translateY(50px);
+  transform: translate3d(0, 30px, 0);
+  /* Force GPU layer immediately */
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  /* Strong containment */
+  contain: layout style paint;
 }
 
 .project-card.animate {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
 }
 
 .project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 35px 120px -15px rgba(0, 0, 0, 0.3);
-  border-color: rgba(145, 94, 255, 0.3);
+  transform: translate3d(0, -8px, 0);
+  /* SIMPLIFIED: Single box-shadow instead of complex effects */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .project-image {
@@ -49,50 +98,88 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
+  /* Force GPU layer */
+  transform: translateZ(0);
+  /* Prevent repaints */
+  contain: layout style paint;
 }
 
+/* ULTRA PERFORMANCE: Simplified 3D cube */
 .project-3d-element {
-  perspective: 1000px;
+  /* REMOVED: Heavy perspective effects */
+  transform: translateZ(0);
 }
 
 .rotating-cube {
-  width: 80px;
-  height: 80px;
-  transform-style: preserve-3d;
-  animation: rotateCube 10s linear infinite;
-}
-
-.cube-side {
-  position: absolute;
   width: 80px;
   height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 36px;
+  color: white;
+  /* ULTRA PERFORMANCE: Replace complex 3D with simple 2D rotation */
+  animation: simpleRotate 10s linear infinite;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+  /* Add subtle 3D effect without heavy preserve-3d */
   background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
 }
 
-.cube-side.front { transform: rotateY(0deg) translateZ(40px); }
-.cube-side.back { transform: rotateY(180deg) translateZ(40px); }
-.cube-side.right { transform: rotateY(90deg) translateZ(40px); }
-.cube-side.left { transform: rotateY(-90deg) translateZ(40px); }
-.cube-side.top { transform: rotateX(90deg) translateZ(40px); }
-.cube-side.bottom { transform: rotateX(-90deg) translateZ(40px); }
-
-@keyframes rotateCube {
-  0% { transform: rotateX(0deg) rotateY(0deg); }
-  100% { transform: rotateX(360deg) rotateY(360deg); }
+/* REMOVED: All complex cube-side elements - too heavy */
+.cube-side {
+  display: none; /* Completely remove for performance */
 }
 
+/* ULTRA PERFORMANCE: Simple 2D rotation instead of complex 3D */
+@keyframes simpleRotate {
+  0% { 
+    transform: rotate(0deg) scale(1) translateZ(0);
+  }
+  50% { 
+    transform: rotate(180deg) scale(1.05) translateZ(0);
+  }
+  100% { 
+    transform: rotate(360deg) scale(1) translateZ(0);
+  }
+}
+
+/* Pause on hover to reduce processing */
 .project-card:hover .rotating-cube {
   animation-play-state: paused;
 }
 
+/* PERFORMANCE: Disable animation on mobile completely */
+@media (max-width: 768px) {
+  .rotating-cube {
+    animation: none;
+    transform: rotate(45deg) translateZ(0);
+  }
+}
+
+/* PERFORMANCE: Disable for reduced motion users */
+@media (prefers-reduced-motion: reduce) {
+  .rotating-cube {
+    animation: none;
+    transform: rotate(45deg) translateZ(0);
+  }
+
+  .project-card {
+    transition: none;
+  }
+
+  .project-card:hover {
+    transform: none;
+  }
+}
+
 .project-content {
   padding: 2.5rem;
+  /* Prevent text reflows */
+  contain: layout style;
 }
 
 .project-content h4 {
@@ -112,66 +199,82 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-bottom: 2rem;
+  /* UPDATED: Remove bottom margin since there are no buttons below */
+  margin-bottom: 0;
+  /* Contain layout changes */
+  contain: layout;
 }
 
 .tag {
   background: rgba(145, 94, 255, 0.2);
   color: #915EFF;
   padding: 0.5rem 1rem;
-  border-radius: 9999px;
+  border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
   border: 1px solid rgba(145, 94, 255, 0.3);
+  /* Force GPU rendering */
+  transform: translateZ(0);
 }
 
-.project-links {
-  display: flex;
-  gap: 1.5rem;
+/* REMOVED: All project-links related CSS since buttons are gone */
+
+/* RESPONSIVE: 3 columns to fewer with clear breakpoints */
+@media (max-width: 1200px) {
+  .projects-container {
+    padding: 0 1.5rem;
+  }
+
+  .projects-grid {
+    gap: 1.5rem;
+  }
 }
 
-.project-link {
-  color: #915EFF;
-  text-decoration: none;
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.project-link:hover {
-  color: #FFFFFF;
-  transform: translateX(5px);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .projects-section {
     padding: 4rem 0;
   }
-  
+
+  .projects-container {
+    padding: 0 1rem;
+  }
+
+  /* 2 columns on tablets */
   .projects-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
   }
-  
+
   .project-content {
     padding: 2rem;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
+  /* 1 column on mobile */
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
   .project-content {
     padding: 1.5rem;
   }
-  
+
   .project-tags {
     gap: 0.5rem;
   }
-  
-  .project-links {
-    flex-direction: column;
-    gap: 1rem;
-  }
+}
+
+/* ULTRA PERFORMANCE: Force hardware acceleration on everything */
+.project-card,
+.rotating-cube,
+.tag {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ULTRA PERFORMANCE: Optimize critical rendering path */
+.projects-grid > * {
+  contain: layout style paint;
 }
